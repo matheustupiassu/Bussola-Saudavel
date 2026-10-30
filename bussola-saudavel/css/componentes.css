@@ -1,0 +1,1016 @@
+/* css/componentes.css */
+
+/* 1. Banner Obrigatório de Demonstração (Cap. 1 / CA-1004 / CA-25) */
+.demo-banner {
+  background-color: var(--status-warning-bg);
+  color: var(--status-warning-text);
+  border-bottom: 2px solid var(--status-warning-border);
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--fs-sm);
+}
+
+.demo-banner__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.demo-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  background-color: var(--status-neutral-bg);
+  color: var(--status-neutral-text);
+  border: 1px solid var(--status-neutral-border);
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-pill);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* 2. Barra Superior de Acessibilidade e Preferências (RA-001, RA-002, Cap. 11.7) */
+.a11y-bar {
+  background-color: var(--bg-surface-elevated);
+  border-bottom: 1px solid var(--border-color);
+  padding: var(--space-2) 0;
+  font-size: var(--fs-sm);
+}
+
+.a11y-bar__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.a11y-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.btn-a11y {
+  min-height: 36px;
+  padding: var(--space-1) var(--space-3);
+  background-color: var(--bg-surface);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.btn-a11y:hover {
+  border-color: var(--brand-primary);
+}
+
+.btn-a11y[aria-pressed="true"] {
+  background-color: var(--brand-primary);
+  color: #FFFFFF;
+  border-color: var(--brand-primary);
+}
+
+[data-contrast="high"] .btn-a11y[aria-pressed="true"] {
+  background-color: #FFFF00;
+  color: #000000;
+}
+
+/* 3. Cabeçalho Principal e Navegação (Cap. 12.1) */
+.site-header {
+  background-color: var(--bg-surface);
+  border-bottom: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 72px;
+  gap: var(--space-4);
+  padding-top: var(--space-2);
+  padding-bottom: var(--space-2);
+}
+
+.brand-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  text-decoration: none;
+  color: var(--text-primary);
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: var(--fs-xl);
+}
+
+.brand-logo:hover {
+  color: var(--brand-primary);
+}
+
+.brand-logo__svg {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+}
+
+.brand-logo__subtitle {
+  display: block;
+  font-family: var(--font-body);
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.nav-toggle {
+  display: none;
+  min-height: var(--touch-target-min);
+  min-width: var(--touch-target-min);
+  padding: var(--space-2) var(--space-3);
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  cursor: pointer;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.site-nav__list {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  list-style: none;
+}
+
+.site-nav__link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--touch-target-min);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: var(--fs-sm);
+}
+
+.site-nav__link:hover {
+  background-color: var(--bg-surface-elevated);
+  color: var(--brand-primary);
+}
+
+.site-nav__link[aria-current="page"] {
+  background-color: var(--bg-surface-elevated);
+  color: var(--brand-primary);
+  border-bottom: 3px solid var(--brand-primary);
+}
+
+.site-nav__link--cta {
+  background-color: var(--brand-primary);
+  color: #FFFFFF;
+}
+
+.site-nav__link--cta:hover {
+  background-color: var(--brand-primary-hover);
+  color: #FFFFFF;
+}
+
+[data-contrast="high"] .site-nav__link--cta {
+  background-color: #FFFF00;
+  color: #000000;
+  border: 2px solid #FFFFFF;
+}
+
+/* 4. Faixa de Emergência Médica (Cap. 1.7 / Cap. 12.3) */
+.emergency-strip {
+  background-color: var(--status-danger-bg);
+  color: var(--status-danger-text);
+  border: 1px solid var(--status-danger-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  margin-bottom: var(--space-6);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  font-size: var(--fs-sm);
+}
+
+/* 5. Cartões e Superfícies Base (Cap. 11.5) */
+.card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: var(--space-6);
+}
+
+.grid-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-6);
+  margin-top: var(--space-4);
+}
+
+/* Botões Padrão (RA-006) */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: var(--touch-target-min);
+  padding: var(--space-2) var(--space-5);
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-size: var(--fs-base);
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  border: 2px solid transparent;
+}
+
+.btn--primary {
+  background-color: var(--brand-primary);
+  color: #FFFFFF;
+}
+
+.btn--primary:hover {
+  background-color: var(--brand-primary-hover);
+  color: #FFFFFF;
+}
+
+.btn--secondary {
+  background-color: var(--bg-surface);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+.btn--secondary:hover {
+  border-color: var(--brand-primary);
+  color: var(--brand-primary);
+}
+
+/* 6. Rodapé Institucional e Transparência (Cap. 12.2) */
+.site-footer {
+  background-color: var(--bg-surface);
+  border-top: 1px solid var(--border-color);
+  padding: var(--space-8) 0 var(--space-6);
+  margin-top: auto;
+  font-size: var(--fs-sm);
+}
+
+.site-footer__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-6);
+  margin-bottom: var(--space-6);
+}
+
+.site-footer__list {
+  list-style: none;
+}
+
+.site-footer__list li {
+  margin-bottom: var(--space-2);
+}
+
+.site-footer__disclaimer {
+  border-top: 1px solid var(--border-color);
+  padding-top: var(--space-4);
+  color: var(--text-muted);
+  font-size: var(--fs-xs);
+}
+/* === ADIÇÕES DA ETAPA 2: PESQUISA DIRETA, GUIADA E CARTÕES DE UNIDADES === */
+
+.search-form {
+  display: grid;
+  grid-template-columns: 2fr 1.2fr 1fr auto;
+  gap: var(--space-3);
+  align-items: end;
+  margin-top: var(--space-4);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.form-label {
+  font-weight: 600;
+  font-size: var(--fs-sm);
+  color: var(--text-primary);
+}
+
+.form-input,
+.form-select {
+  min-height: var(--touch-target-min);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  background-color: var(--bg-surface);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: var(--fs-base);
+}
+
+.form-hint {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+}
+
+.guided-group {
+  margin-top: var(--space-4);
+}
+
+.chips-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+}
+
+.chip-guiado {
+  min-height: 38px;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-surface-elevated);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.chip-guiado:hover {
+  border-color: var(--brand-primary);
+  color: var(--brand-primary);
+}
+
+.chip-guiado--orientativo {
+  border-style: dashed;
+}
+
+/* Cartões de Unidades na Prévia e Busca (RF-011 / RN-004) */
+.grid-unidades {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: var(--space-5);
+  margin-top: var(--space-4);
+}
+
+.unit-card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  box-shadow: var(--shadow-sm);
+}
+
+.unit-card__top {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.unit-card__title {
+  font-size: var(--fs-xl);
+  margin-bottom: 0;
+}
+
+.unit-card__meta {
+  font-size: var(--fs-sm);
+  color: var(--text-secondary);
+  margin-bottom: 0;
+}
+
+.unit-card__services {
+  border-top: 1px solid var(--border-color);
+  padding-top: var(--space-3);
+}
+
+.unit-card__services h4 {
+  font-size: var(--fs-sm);
+  margin-bottom: var(--space-2);
+}
+
+.service-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.service-list__item {
+  background-color: var(--bg-surface-elevated);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  font-size: var(--fs-sm);
+}
+
+.service-list__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-1);
+}
+
+.unit-card__footer {
+  margin-top: auto;
+  border-top: 1px solid var(--border-color);
+  padding-top: var(--space-3);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+}
+
+/* Pílulas Semânticas de Disponibilidade e Confiabilidade (Cap. 10.3, 10.4, 11.9) */
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  border: 1px solid transparent;
+}
+
+.status-pill--available {
+  background-color: var(--status-available-bg);
+  color: var(--status-available-text);
+  border-color: var(--status-available-border);
+}
+
+.status-pill--warning {
+  background-color: var(--status-warning-bg);
+  color: var(--status-warning-text);
+  border-color: var(--status-warning-border);
+}
+
+.status-pill--danger {
+  background-color: var(--status-danger-bg);
+  color: var(--status-danger-text);
+  border-color: var(--status-danger-border);
+}
+
+.status-pill--info {
+  background-color: var(--status-info-bg);
+  color: var(--status-info-text);
+  border-color: var(--status-info-border);
+}
+
+.status-pill--neutral {
+  background-color: var(--status-neutral-bg);
+  color: var(--status-neutral-text);
+  border-color: var(--status-neutral-border);
+}
+
+.orientation-banner {
+  background-color: var(--status-info-bg);
+  color: var(--status-info-text);
+  border: 1px solid var(--status-info-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  margin-top: var(--space-3);
+  font-size: var(--fs-sm);
+}
+
+.empty-state {
+  background-color: var(--bg-surface-elevated);
+  border: 2px dashed var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: var(--space-8);
+  text-align: center;
+  margin-top: var(--space-4);
+}
+
+@media (max-width: 900px) {
+  .search-form {
+    grid-template-columns: 1fr;
+  }
+}
+/* === ADIÇÕES DA ETAPA 3: 10 FILTROS, ORDENAÇÃO, PAGINAÇÃO E SPLIT LISTA/MAPA === */
+
+.filters-panel {
+  margin-top: var(--space-4);
+  border-top: 1px solid var(--border-color);
+  padding-top: var(--space-4);
+}
+
+.filters-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-4);
+  margin-top: var(--space-3);
+}
+
+.filter-fieldset {
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  background-color: var(--bg-surface-elevated);
+}
+
+.filter-fieldset legend {
+  font-weight: 700;
+  font-size: var(--fs-xs);
+  padding: 0 var(--space-2);
+  color: var(--text-primary);
+}
+
+.filter-options-scroll {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  max-height: 155px;
+  overflow-y: auto;
+  padding-right: var(--space-1);
+}
+
+.filter-check-label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--fs-sm);
+  cursor: pointer;
+  padding: 2px 0;
+}
+
+.filter-check-label input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--brand-primary);
+}
+
+.active-filters-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+  padding: var(--space-3);
+  background-color: var(--bg-surface-elevated);
+  border-radius: var(--radius-md);
+}
+
+.active-filter-chip {
+  min-height: 32px;
+  padding: 2px var(--space-3);
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--brand-primary);
+  background-color: var(--bg-surface);
+  color: var(--text-primary);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.active-filter-chip:hover {
+  background-color: var(--status-danger-bg);
+  color: var(--status-danger-text);
+  border-color: var(--status-danger-border);
+}
+
+/* Barra de Controles de Resultados: Contagem, Ordenação e Alternância Mobile */
+.results-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.mobile-view-toggle {
+  display: none;
+  gap: var(--space-2);
+}
+
+/* Layout Lado a Lado Desktop: Lista à Esquerda | Mapa à Direita (Cap. 4.1) */
+.search-split-layout {
+  display: grid;
+  grid-template-columns: 1.25fr 0.95fr;
+  gap: var(--space-6);
+  align-items: start;
+}
+
+.results-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.unit-card--selected {
+  border: 2px solid var(--brand-primary);
+  box-shadow: var(--shadow-md);
+}
+
+.map-sticky-panel {
+  position: sticky;
+  top: 88px;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  box-shadow: var(--shadow-sm);
+}
+
+.map-fallback-box {
+  background-color: var(--bg-surface-elevated);
+  border: 1px dashed var(--border-color);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+}
+
+.map-area-sim {
+  margin-top: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--border-color);
+}
+
+.map-pins-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+  max-height: 290px;
+  overflow-y: auto;
+}
+
+.map-pin-item {
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  background-color: var(--bg-surface);
+  padding: var(--space-2);
+}
+
+.map-pin-item.is-highlighted {
+  border: 2px solid var(--brand-primary);
+  background-color: var(--status-info-bg);
+}
+
+.map-pin-btn {
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.map-pin-missing {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+}
+
+.pagination-box {
+  margin-top: var(--space-5);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+/* Responsividade Mobile/Tablet para alternar Lista | Mapa (Cap. 4.1 / CA-404) */
+@media (max-width: 960px) {
+  .mobile-view-toggle {
+    display: inline-flex;
+  }
+
+  .search-split-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .search-split-layout[data-mobile-view="lista"] .map-column {
+    display: none;
+  }
+
+  .search-split-layout[data-mobile-view="mapa"] .list-column {
+    display: none;
+  }
+
+  .map-sticky-panel {
+    position: static;
+  }
+}
+/* === ADIÇÕES DA ETAPA 4: PÁGINA DE DETALHES E AS 10 AÇÕES OBRIGATÓRIAS === */
+
+.details-actions-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+  padding: var(--space-4);
+  background-color: var(--bg-surface-elevated);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+}
+
+.action-chip {
+  min-height: 40px;
+  padding: var(--space-2) var(--space-3);
+  background-color: var(--bg-surface);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.action-chip:hover {
+  border-color: var(--brand-primary);
+  color: var(--brand-primary);
+  background-color: var(--bg-surface-elevated);
+}
+/* === ADIÇÕES DA ETAPA 5: DASHBOARD DO PACIENTE E SISTEMA DE ALERTAS === */
+
+.patient-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-4);
+  margin-top: var(--space-4);
+}
+
+.metric-box {
+  background-color: var(--bg-surface-elevated);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  text-align: center;
+}
+
+.metric-box__value {
+  font-family: var(--font-heading);
+  font-size: var(--fs-2xl);
+  font-weight: 800;
+  color: var(--brand-primary);
+  display: block;
+}
+
+.metric-box__label {
+  font-size: var(--fs-xs);
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.two-col-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-6);
+}
+
+@media (max-width: 900px) {
+  .two-col-grid {
+    grid-template-columns: 1fr;
+  }
+}
+/* === ADIÇÕES DA ETAPA 6: PAINEL INSTITUCIONAL HÍBRIDO E 9 INDICADORES === */
+
+.panel-hybrid-layout {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  gap: var(--space-6);
+  align-items: start;
+}
+
+.panel-sidebar {
+  position: sticky;
+  top: 88px;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  box-shadow: var(--shadow-sm);
+}
+
+.panel-sidebar__nav {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+
+.panel-sidebar__link {
+  display: block;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  color: var(--text-primary);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+}
+
+.panel-sidebar__link:hover {
+  background-color: var(--bg-surface-elevated);
+  color: var(--brand-primary);
+}
+
+.overview-nine-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--space-3);
+  margin-top: var(--space-3);
+}
+
+.overview-item {
+  background-color: var(--bg-surface-elevated);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+}
+
+.overview-item__title {
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--text-muted);
+  font-weight: 700;
+  margin-bottom: var(--space-1);
+}
+
+.overview-item__content {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0;
+}
+
+.fieldset-edicao-institucional {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+.fieldset-edicao-institucional:disabled {
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+@media (max-width: 960px) {
+  .panel-hybrid-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .panel-sidebar {
+    position: static;
+  }
+}
+/* === ADIÇÕES DA ETAPA 7: PAINEL ADMINISTRATIVO E 10 INDICADORES === */
+
+.admin-ten-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: var(--space-3);
+  margin-top: var(--space-3);
+}
+
+.admin-stat-card {
+  background-color: var(--bg-surface-elevated);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+}
+
+.admin-stat-card__label {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  font-weight: 700;
+  text-transform: uppercase;
+  display: block;
+}
+
+.admin-stat-card__value {
+  font-family: var(--font-heading);
+  font-size: var(--fs-xl);
+  font-weight: 800;
+  color: var(--brand-primary);
+  margin-top: 2px;
+  display: block;
+}
+/* === ADIÇÕES DA ETAPA 8: BARRA GLOBAL DE INTEGRAÇÃO E SINCRONIZAÇÃO === */
+
+.sim-bar {
+  background-color: var(--bg-surface);
+  border-bottom: 1px dashed var(--border-color);
+  padding: var(--space-2) 0;
+  font-size: var(--fs-xs);
+}
+
+.sim-bar__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.sim-bar__persona {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.sim-bar__label {
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+
+.sim-bar__select {
+  padding: 4px var(--space-2);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  background-color: var(--bg-surface-elevated);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+}
+
+.sim-bar__Counters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.sim-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-surface-elevated);
+  color: var(--text-primary);
+  text-decoration: none;
+  font-size: var(--fs-xs);
+}
+
+.sim-pill:hover {
+  border-color: var(--brand-primary);
+}
+
+.sim-pill--highlight {
+  background-color: var(--status-available-bg);
+  color: var(--status-available-text);
+  border-color: var(--status-available-border);
+}
+
+.sim-pill--warn {
+  background-color: var(--status-warning-bg);
+  color: var(--status-warning-text);
+  border-color: var(--status-warning-border);
+}
+
+.sim-bar__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.sim-bar__toast {
+  margin-top: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  background-color: var(--status-info-bg);
+  color: var(--status-info-text);
+  border-top: 1px solid var(--status-info-border);
+  text-align: center;
+  font-weight: 600;
+}

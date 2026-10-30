@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Detalhes da Unidade Fictícia — Bússola Saudável</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Nunito+Sans:wght@700;800&display=swap" rel="stylesheet">
+ <link rel="stylesheet" href="/css/tokens.css" />
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/componentes.css" />
+  <link rel="stylesheet" href="/css/responsivo.css" />
+</head>
+<body data-page="unidade">
+  <div id="app-header"></div>
+
+  <main id="conteudo-principal" class="container" tabindex="-1">
+    <div id="detalhes-conteudo-principal">
+      <!-- Cabeçalho da Ficha -->
+      <section class="card" aria-labelledby="detalhes-unidade-nome">
+        <div id="detalhes-cabecalho-topo" style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--space-2); margin-bottom: var(--space-2);"></div>
+        <h1 id="detalhes-unidade-nome" style="margin-bottom: var(--space-2);">Carregando detalhes...</h1>
+        <p id="detalhes-unidade-meta" class="unit-card__meta"></p>
+
+        <!-- Barra com as 10 Ações Obrigatórias (RF-018) -->
+        <div class="details-actions-bar" role="toolbar" aria-label="Ações obrigatórias para o estabelecimento">
+          <strong>Ações rápidas:</strong>
+          <button type="button" id="acao-contatar" class="action-chip">📞 1. Contatar</button>
+          <button type="button" id="acao-direcoes" class="action-chip">📍 2. Obter Direções</button>
+          <button type="button" id="acao-agendamento" class="action-chip">🔗 3. Canal/Agendamento</button>
+          <button type="button" id="acao-favoritar" class="action-chip" aria-pressed="false">☆ 4. Favoritar</button>
+          <button type="button" id="acao-compartilhar" class="action-chip">📤 5. Compartilhar</button>
+          <button type="button" id="acao-disp-detalhada" class="action-chip">📊 6. Disp. Detalhada</button>
+          <button type="button" id="acao-requisitos" class="action-chip">📋 7. Documentos/Requisitos</button>
+          <button type="button" id="acao-historico" class="action-chip">🕒 8. Histórico Público</button>
+          <button type="button" id="acao-relatar" class="action-chip">⚠ 9. Relatar Erro</button>
+          <button type="button" id="acao-alerta" class="action-chip">🔔 10. Criar Alerta</button>
+        </div>
+      </section>
+
+      <!-- Conteúdo Dinâmico por Seções Prioritárias (RF-017) -->
+      <div id="detalhes-secoes-container"></div>
+
+      <div style="margin-top: var(--space-4);">
+        <a href="busca.html" class="btn btn--secondary">← Voltar para a pesquisa de unidades</a>
+      </div>
+    </div>
+  </main>
+
+  <div id="app-footer"></div>
+  <script type="module" src="/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Painel Administrativo (Simulação) — Bússola Saudável</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='14' fill='%230F766E'/></svg>" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Nunito+Sans:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/tokens.css" />
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/componentes.css" />
+  <link rel="stylesheet" href="/css/responsivo.css" />
+</head>
+<body data-page="administracao">
+  <div id="app-header"></div>
+
+  <main id="conteudo-principal" class="container" tabindex="-1">
+    <div id="aviso-armazenamento" class="orientation-banner" role="status" hidden></div>
+    <div id="feedback-painel-admin" role="status" aria-live="polite" hidden></div>
+
+    <!-- Cabeçalho e Seletor dos 3 Papéis Administrativos (Cap. 9.2–9.4 / RN-020 / CA-901 / T-16) -->
+    <section class="card" aria-labelledby="titulo-painel-admin">
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--space-2);">
+        <span class="demo-badge">MATRIZ DE PERMISSÕES SIMULADA NA INTERFACE — SEM SEGURANÇA REAL (RN-020)</span>
+        <span id="admin-badge-papel-ativo" class="status-pill status-pill--info"></span>
+      </div>
+
+      <h1 id="titulo-painel-admin" style="margin-top: var(--space-2);">Painel Administrativo e Governança Informacional</h1>
+      <p id="admin-descricao-papel-ativo" class="form-hint"></p>
+
+      <div class="search-form" style="grid-template-columns: 2fr auto; margin-top: var(--space-3);">
+        <div class="form-group">
+          <label for="admin-select-papel" class="form-label">Alternar Papel Administrativo Demonstrativo (T-16 / CA-901 / CA-903):</label>
+          <select id="admin-select-papel" class="form-select"></select>
+        </div>
+        <div style="display: flex; gap: var(--space-2); flex-wrap: wrap;">
+          <a href="/paginas/instituicao.html" class="btn btn--secondary">← Painel Institucional</a>
+          <a href="/paginas/paciente.html" class="btn btn--secondary">Área do Paciente</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Layout Híbrido: Menu Lateral Dinâmico + Módulos por Papel (RF-032) -->
+    <div class="panel-hybrid-layout">
+      <aside class="panel-sidebar" aria-label="Menu do Painel Administrativo">
+        <h2 style="font-size: var(--fs-base); margin-bottom: 0;">Módulos Visíveis</h2>
+        <p class="form-hint" style="margin-top: 4px;">Ajustados automaticamente pelo papel selecionado (CA-901):</p>
+        <ul class="panel-sidebar__nav">
+          <li><a href="#sec-admin-dashboard" class="panel-sidebar__link">📊 Dashboard (10 Indicadores)</a></li>
+          <li data-nav-target="mod-verificacoes"><a href="#mod-verificacoes" class="panel-sidebar__link">🛡 Pedidos de Verificação</a></li>
+          <li data-nav-target="mod-revisao-disp"><a href="#mod-revisao-disp" class="panel-sidebar__link">⏱ Revisão e Prazos</a></li>
+          <li data-nav-target="mod-cadastros-rep"><a href="#mod-cadastros-rep" class="panel-sidebar__link">🏥 Cadastros e Representantes</a></li>
+          <li data-nav-target="mod-relatos"><a href="#mod-relatos" class="panel-sidebar__link">⚠ Relatos de Erro (T-18)</a></li>
+          <li data-nav-target="mod-estatisticas"><a href="#mod-estatisticas" class="panel-sidebar__link">📈 Relatórios e Estatísticas</a></li>
+          <li data-nav-target="mod-pacientes"><a href="#mod-pacientes" class="panel-sidebar__link">👥 Contas e Restauração</a></li>
+          <li data-nav-target="mod-auditoria"><a href="#mod-auditoria" class="panel-sidebar__link">🕒 Trilha de Auditoria Global</a></li>
+        </ul>
+      </aside>
+
+      <div>
+        <!-- Dashboard com os 10 Indicadores Obrigatórios (RF-032 / Cap. 9.1 / CA-904) -->
+        <section id="sec-admin-dashboard" class="card" aria-labelledby="titulo-adm-dash">
+          <h2 id="titulo-adm-dash">Dashboard Administrativo (10 Indicadores — RF-032)</h2>
+          <div class="admin-ten-grid">
+            <div class="admin-stat-card">
+              <span class="admin-stat-card__label">1. Total de Instituições</span>
+              <span id="adm-ind-1-total" class="admin-stat-card__value">10</span>
+            </div>
+            <div class="admin-stat-card">
+              <span class="admin-stat-card__label">2. Cadastros Pendentes</span>
+              <span id="adm-ind-2-pendentes" class="admin-stat-card__value">0</span>
+            </div>
+            <div class="admin-stat-card">
+              <span class="admin-stat-card__label">3. Instituições Verificadas</span>
+              <span id="adm-ind-3-verificadas" class="admin-stat-card__value">0</span>
+            </div>
+            <div class="admin-stat-card">
+              <span class="admin-stat-card__label">4. Informações Vencidas</span>
+              <span id="adm-ind-4-vencidas" class="admin-stat-card__value">0</span>
+            </div>
+            <div class="admin-stat-card">
+              <span class="admin-stat-card__label">5. Serviços c/ Disp. Atualizada</span>
+              <span id="adm-ind-5-atualizadas" class="admin-stat-card__value">0</span>
+            </div>
+            <div class="admin-stat-card">
+              <span class="admin-stat-card__label">6. Irregularidades / Pendências</span>
+              <span id="adm-ind-6-irregularidades" class="admin-stat-card__value">0</span>
+            </div>
+            <div class="admin-stat-card">
+              <span class="admin-stat-card__label">7. Pedidos de Verificação</span>
+              <span id="adm-ind-7-verificacoes" class="admin-stat-card__value">0</span>
+            </div>
+            <div class="admin-stat-card">
+              <span class="admin-stat-card__label">8. Atividades Auditadas</span>
+              <span id="adm-ind-8-atividades" class="admin-stat-card__value">0</span>
+            </div>
+            <div class="admin-stat-card">
+              <span class="admin-stat-card__label">9. Relatórios da Rede</span>
+              <span id="adm-ind-9-relatorios" class="admin-stat-card__value">0</span>
+            </div>
+            <div class="admin-stat-card">
+              <span class="admin-stat-card__label">10. Avisos e Relatos</span>
+              <span id="adm-ind-10-avisos" class="admin-stat-card__value">0</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Módulo A: Solicitações de Verificação (Admin Geral e Verificador) -->
+        <section id="mod-verificacoes" class="card" aria-labelledby="titulo-mod-verif">
+          <h2 id="titulo-mod-verif">🛡 Análise de Pedidos de Verificação (RF-033 / T-17)</h2>
+          <p class="form-hint">Apenas o Verificador ou o Administrador Geral podem aprovar solicitações e conceder o selo <strong>Verificado</strong>.</p>
+          <div id="admin-lista-verificacoes" class="service-list" style="margin-top: var(--space-3);"></div>
+        </section>
+
+        <!-- Módulo B: Revisão de Informações, Disponibilidade e Prazos Vencidos (Admin Geral e Verificador) -->
+        <section id="mod-revisao-disp" class="card" aria-labelledby="titulo-mod-rev">
+          <h2 id="titulo-mod-rev">⏱ Revisão de Disponibilidade, Confiabilidade e Prazos (RF-033)</h2>
+          <p class="form-hint">Corrija estados de disponibilidade, atribua selo de confiabilidade ou sinalize informações com prazo de revisão vencido.</p>
+
+          <form id="form-admin-revisao-disp" class="two-col-grid" style="margin-top: var(--space-3);">
+            <div class="form-group">
+              <label for="admin-rev-unidade" class="form-label">Estabelecimento:</label>
+              <select id="admin-rev-unidade" class="form-select"></select>
+            </div>
+            <div class="form-group">
+              <label for="admin-rev-confiabilidade" class="form-label">Confiabilidade / Selo da Unidade:</label>
+              <select id="admin-rev-confiabilidade" class="form-select"></select>
+            </div>
+            <div class="form-group">
+              <label for="admin-rev-disp-id" class="form-label">Serviço / Modalidade para revisão:</label>
+              <select id="admin-rev-disp-id" class="form-select"></select>
+            </div>
+            <div class="form-group">
+              <label for="admin-rev-estado-disp" class="form-label">Corrigir Estado de Disponibilidade:</label>
+              <select id="admin-rev-estado-disp" class="form-select"></select>
+            </div>
+            <div style="grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: var(--space-2);">
+              <button type="submit" class="btn btn--primary">Aplicar Revisão Administrativa</button>
+              <button type="button" id="btn-admin-sinalizar-vencido" class="btn btn--secondary">
+                ⌛ Sinalizar Unidade/Serviço como Vencido (DISP-06 / DESATUALIZADO)
+              </button>
+            </div>
+          </form>
+        </section>
+
+        <!-- Módulo C: Cadastros Institucionais e Vínculo de Representantes (Admin Geral e Admin Institucional — Bloqueado para Verificador CA-903) -->
+        <section id="mod-cadastros-rep" class="card" aria-labelledby="titulo-mod-cad">
+          <h2 id="titulo-mod-cad">🏥 Gestão de Solicitações Institucionais e Representantes (RF-033)</h2>
+          <p class="form-hint">Exclusivo do Administrador Geral e do Administrador Institucional (oculto para Verificador conforme CA-903).</p>
+
+          <form id="form-admin-vincular-rep" class="filter-fieldset" style="padding: var(--space-4); margin-top: var(--space-3);">
+            <h3>Vincular ou Desvincular Representante Institucional</h3>
+            <div class="two-col-grid" style="margin-top: var(--space-2);">
+              <div class="form-group">
+                <label for="admin-rep-persona" class="form-label">Representante Institucional:</label>
+                <select id="admin-rep-persona" class="form-select"></select>
+              </div>
+              <div class="form-group">
+                <label for="admin-rep-unidade" class="form-label">Unidade Fictícia:</label>
+                <select id="admin-rep-unidade" class="form-select"></select>
+              </div>
+              <div class="form-group">
+                <label for="admin-rep-acao" class="form-label">Operação:</label>
+                <select id="admin-rep-acao" class="form-select">
+                  <option value="VINCULAR">Vincular representante à unidade</option>
+                  <option value="DESVINCULAR">Remover vínculo da unidade</option>
+                </select>
+              </div>
+              <div style="display: flex; align-items: end;">
+                <button type="submit" class="btn btn--primary" style="width: 100%;">Atualizar Vínculo</button>
+              </div>
+            </div>
+          </form>
+
+          <h3 style="margin-top: var(--space-4); font-size: var(--fs-base);">Fila de Solicitações Institucionais (Cap. 8.12):</h3>
+          <div id="admin-lista-solicitacoes" class="service-list" style="margin-top: var(--space-2);"></div>
+        </section>
+
+        <!-- Módulo D: Tratamento de Relatos de Informação Incorreta (T-18) -->
+        <section id="mod-relatos" class="card" aria-labelledby="titulo-mod-relatos">
+          <h2 id="titulo-mod-relatos">⚠ Processamento de Relatos de Utilizadores (RF-033 / T-18)</h2>
+          <p class="form-hint">Relatos enviados a partir do botão "9. Relatar Erro" nas páginas de detalhes das unidades fictícias.</p>
+          <div id="admin-lista-relatos" class="service-list" style="margin-top: var(--space-3);"></div>
+        </section>
+
+        <!-- Módulo E: Estatísticas e Relatórios Demonstrativos (RF-033) -->
+        <section id="mod-estatisticas" class="card" aria-labelledby="titulo-mod-est">
+          <h2 id="titulo-mod-est">📈 Estatísticas e Relatórios Demonstrativos</h2>
+          <div id="admin-estatisticas-conteudo" class="service-list" style="margin-top: var(--space-3);"></div>
+        </section>
+
+        <!-- Módulo F: Gestão de Contas de Pacientes e Restauração Global (Exclusivo Admin Geral — CA-903 / T-19) -->
+        <section id="mod-pacientes" class="card" aria-labelledby="titulo-mod-pac">
+          <h2 id="titulo-mod-pac">👥 Escopo de Contas de Pacientes e Restauração do Protótipo (Exclusivo Admin Geral — CA-903)</h2>
+          <p id="admin-resumo-pacientes" class="form-hint"></p>
+          <div style="display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-3);">
+            <button type="button" id="btn-admin-limpar-dados-pacientes" class="btn btn--secondary">
+              Limpar Registos Locais de Pacientes
+            </button>
+            <button type="button" id="btn-admin-restaurar-seed" class="btn btn--primary">
+              ↺ Restaurar Todo o Protótipo para o Seed Inicial (T-19)
+            </button>
+          </div>
+        </section>
+
+        <!-- Módulo G: Trilha de Auditoria Administrativa e Institucional (CA-902) -->
+        <section id="mod-auditoria" class="card" aria-labelledby="titulo-mod-aud">
+          <h2 id="titulo-mod-aud">🕒 Trilha de Auditoria Local (RF-033 / CA-902)</h2>
+          <p class="form-hint">Registo cronológico de todas as operações institucionais e administrativas simuladas.</p>
+          <div id="admin-lista-auditoria" class="service-list" style="margin-top: var(--space-3);"></div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <div id="app-footer"></div>
+  <script type="module" src="/js/app.js"></script>
+</body>
+</html>
