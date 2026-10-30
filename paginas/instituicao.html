@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Painel Institucional (Simulação) — Bússola Saudável</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='14' fill='%230F766E'/></svg>" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Nunito+Sans:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/tokens.css" />
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/componentes.css" />
+  <link rel="stylesheet" href="/css/responsivo.css" />
+</head>
+<body data-page="instituicao">
+  <div id="app-header"></div>
+
+  <main id="conteudo-principal" class="container" tabindex="-1">
+    <div id="aviso-armazenamento" class="orientation-banner" role="status" hidden></div>
+    <div id="feedback-painel-institucional" role="status" aria-live="polite" hidden></div>
+
+    <!-- Topo: Seleção de Representante Institucional e Alternância de Unidade (RF-028 / CA-804) -->
+    <section class="card" aria-labelledby="titulo-painel-inst">
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--space-2);">
+        <span class="demo-badge">PAINEL INSTITUCIONAL DEMONSTRATIVO — SEM AUTENTICAÇÃO REAL (RF-028)</span>
+        <span id="inst-status-vinculo" class="status-pill status-pill--available"></span>
+      </div>
+
+      <h1 id="titulo-painel-inst" style="margin-top: var(--space-2);">Gestão Institucional de Unidades e Disponibilidade</h1>
+      <p class="form-hint">
+        Gerencie múltiplas unidades simuladamente vinculadas (CA-804). Informações fornecidas pela instituição recebem o rótulo <strong>Fornecido pela instituição</strong> e não equivalem a verificação independente (CA-803).
+      </p>
+
+      <div class="two-col-grid" style="margin-top: var(--space-3);">
+        <div class="form-group">
+          <label for="inst-select-persona" class="form-label">1. Perfil institucional ativo (Simulação de papéis):</label>
+          <select id="inst-select-persona" class="form-select"></select>
+        </div>
+        <div class="form-group">
+          <label for="inst-select-unidade" class="form-label">2. Selecionar Estabelecimento (Vinculado ou Não Vinculado para T-15):</label>
+          <select id="inst-select-unidade" class="form-select"></select>
+        </div>
+      </div>
+
+      <!-- Aviso de bloqueio quando selecionada unidade não vinculada (T-15 / RN-020) -->
+      <div id="inst-aviso-bloqueio-t15" class="emergency-strip" style="margin-top: var(--space-4); margin-bottom: 0;" hidden>
+        <span aria-hidden="true">🔒</span>
+        <div>
+          <strong>Unidade Não Vinculada ao Perfil Atual (Teste T-15 / RN-020):</strong>
+          A interface demonstrativa desativou os formulários de edição abaixo porque esta unidade não pertence à lista de vínculos deste representante. <em>Nota de transparência: como não há backend neste protótipo, este bloqueio ocorre apenas na interface; em produção, a autorização deve ser validada no servidor.</em>
+        </div>
+      </div>
+    </section>
+
+    <!-- Layout Híbrido: Barra Lateral + Conteúdo Principal (Cap. 8.1) -->
+    <div class="panel-hybrid-layout">
+      <aside class="panel-sidebar" aria-label="Menu do Painel Institucional">
+        <h2 style="font-size: var(--fs-base); margin-bottom: 0;">Navegação do Painel</h2>
+        <ul class="panel-sidebar__nav">
+          <li><a href="#sec-visao-geral" class="panel-sidebar__link">📊 1. Visão Geral (9 Itens)</a></li>
+          <li><a href="#sec-disponibilidade" class="panel-sidebar__link">⚡ 2. Atualizar Disponibilidade</a></li>
+          <li><a href="#sec-dados-gerais" class="panel-sidebar__link">🏥 3. Dados Gerais e Horários</a></li>
+          <li><a href="#sec-servicos-requisitos" class="panel-sidebar__link">🩺 4. Serviços e Requisitos</a></li>
+          <li><a href="#sec-verificacao-cadastro" class="panel-sidebar__link">🛡 5. Verificação e Cadastro</a></li>
+          <li><a href="#sec-historico-auditoria" class="panel-sidebar__link">🕒 6. Histórico de Auditoria</a></li>
+        </ul>
+        <hr style="margin: var(--space-3) 0; border-color: var(--border-color);" />
+        <a href="/paginas/busca.html" class="btn btn--secondary" style="width: 100%; font-size: var(--fs-xs);">Ver na Busca Pública</a>
+      </aside>
+
+      <div>
+        <!-- Seção 1: Visão Geral com os 9 Itens Obrigatórios (Cap. 8.2) -->
+        <section id="sec-visao-geral" class="card" aria-labelledby="titulo-ov-9">
+          <h2 id="titulo-ov-9">1. Visão Geral da Unidade (9 Indicadores — Cap. 8.2)</h2>
+          <div class="overview-nine-grid">
+            <div class="overview-item">
+              <div class="overview-item__title">(1) Resumo Institucional</div>
+              <p id="ov-1-resumo" class="overview-item__content"></p>
+            </div>
+            <div class="overview-item">
+              <div class="overview-item__title">(2) Serviços Cadastrados</div>
+              <p id="ov-2-servicos" class="overview-item__content"></p>
+            </div>
+            <div class="overview-item">
+              <div class="overview-item__title">(3) Disponibilidade Informada</div>
+              <p id="ov-3-disponibilidade" class="overview-item__content"></p>
+            </div>
+            <div class="overview-item">
+              <div class="overview-item__title">(4) Dados Desatualizados</div>
+              <p id="ov-4-desatualizados" class="overview-item__content"></p>
+            </div>
+            <div class="overview-item">
+              <div class="overview-item__title">(5) Prazos de Revisão (Cap. 8.11)</div>
+              <p id="ov-5-revisoes" class="overview-item__content"></p>
+            </div>
+            <div class="overview-item">
+              <div class="overview-item__title">(6) Alterações Recentes</div>
+              <p id="ov-6-alteracoes" class="overview-item__content"></p>
+            </div>
+            <div class="overview-item">
+              <div class="overview-item__title">(7) Pedidos de Verificação</div>
+              <p id="ov-7-verificacao" class="overview-item__content"></p>
+            </div>
+            <div class="overview-item">
+              <div class="overview-item__title">(8) Avisos Administrativos / Relatos</div>
+              <p id="ov-8-avisos" class="overview-item__content"></p>
+            </div>
+            <div class="overview-item">
+              <div class="overview-item__title">(9) Ações Rápidas</div>
+              <div style="display: flex; gap: var(--space-2); flex-wrap: wrap; margin-top: 4px;">
+                <a href="#sec-disponibilidade" class="btn-a11y">Atualizar Vagas</a>
+                <a href="#sec-verificacao-cadastro" class="btn-a11y">Pedir Selo</a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Seção 2: Atualizar Disponibilidade por Serviço e Modalidade (RF-029 / CA-801 / T-14) -->
+        <section id="sec-disponibilidade" class="card" aria-labelledby="titulo-disp-inst">
+          <h2 id="titulo-disp-inst">2. Atualizar Disponibilidade por Serviço e Modalidade (RF-029)</h2>
+          <p class="form-hint">
+            Alterações refletem imediatamente na pesquisa pública, nos detalhes da unidade e acionam alertas locais elegíveis de pacientes (CA-801 / T-14). Prazo de revisão de disponibilidade: <strong>diário</strong>.
+          </p>
+
+          <fieldset class="fieldset-edicao-institucional">
+            <form id="form-atualizar-disponibilidade" class="two-col-grid" style="margin-top: var(--space-3);">
+              <div class="form-group">
+                <label for="form-disp-servico" class="form-label">Serviço da unidade:</label>
+                <select id="form-disp-servico" class="form-select" required></select>
+              </div>
+              <div class="form-group">
+                <label for="form-disp-modalidade" class="form-label">Modalidade (RN-002):</label>
+                <select id="form-disp-modalidade" class="form-select" required>
+                  <option value="SUS">SUS</option>
+                  <option value="Convênio">Convênio</option>
+                  <option value="Particular">Particular</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="form-disp-estado" class="form-label">Novo Estado de Disponibilidade (7 estados):</label>
+                <select id="form-disp-estado" class="form-select" required></select>
+              </div>
+              <div class="form-group">
+                <label for="form-disp-fonte" class="form-label">Fonte / Setor declarante:</label>
+                <input type="text" id="form-disp-fonte" class="form-input" value="Coordenação da Unidade (Demo)" required maxlength="80" />
+              </div>
+              <div style="grid-column: 1 / -1;">
+                <button type="submit" class="btn btn--primary">Publicar Atualização de Disponibilidade</button>
+              </div>
+            </form>
+          </fieldset>
+        </section>
+
+        <!-- Seção 3: Editar Dados Institucionais, Horários e Acessibilidade com Prévia (RF-029) -->
+        <section id="sec-dados-gerais" class="card" aria-labelledby="titulo-dados-inst">
+          <h2 id="titulo-dados-inst">3. Editar Dados Gerais, Horários e Acessibilidade (RF-029)</h2>
+          <fieldset class="fieldset-edicao-institucional">
+            <form id="form-editar-unidade" class="service-list" style="margin-top: var(--space-3);">
+              <div class="two-col-grid">
+                <div class="form-group">
+                  <label for="edit-unidade-nome" class="form-label">Nome da Unidade Fictícia:</label>
+                  <input type="text" id="edit-unidade-nome" class="form-input" disabled />
+                </div>
+                <div class="form-group">
+                  <label for="edit-unidade-tipo" class="form-label">Tipo:</label>
+                  <input type="text" id="edit-unidade-tipo" class="form-input" disabled />
+                </div>
+                <div class="form-group">
+                  <label for="edit-unidade-horario" class="form-label">Horário geral de funcionamento (Revisão semanal):</label>
+                  <input type="text" id="edit-unidade-horario" class="form-input" required maxlength="120" />
+                </div>
+                <div class="form-group">
+                  <label for="edit-unidade-contato" class="form-label">Contato demonstrativo (Não usar telefone real):</label>
+                  <input type="text" id="edit-unidade-contato" class="form-input" maxlength="80" />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="edit-unidade-agendamento" class="form-label">Procedimento / Canal de agendamento demonstrativo:</label>
+                <input type="text" id="edit-unidade-agendamento" class="form-input" maxlength="160" />
+              </div>
+
+              <div class="form-group">
+                <label for="edit-unidade-endereco" class="form-label">Endereço demonstrativo (Belém/PA):</label>
+                <input type="text" id="edit-unidade-endereco" class="form-input" required maxlength="160" />
+              </div>
+
+              <div class="form-group">
+                <label for="edit-unidade-acessibilidade" class="form-label">Recursos de acessibilidade (separados por vírgula):</label>
+                <input type="text" id="edit-unidade-acessibilidade" class="form-input" maxlength="200" />
+              </div>
+
+              <!-- Prévia antes de salvar (RF-029) -->
+              <div id="previa-cartao-institucional" class="orientation-banner" aria-live="polite"></div>
+
+              <div>
+                <button type="submit" class="btn btn--primary">Guardar Dados Gerais da Unidade</button>
+              </div>
+            </form>
+          </fieldset>
+        </section>
+
+        <!-- Seção 4: Gestão de Serviços e Requisitos de Atendimento (RF-029) -->
+        <section id="sec-servicos-requisitos" class="card" aria-labelledby="titulo-servicos-inst">
+          <h2 id="titulo-servicos-inst">4. Serviços, Especialidades e Requisitos de Atendimento</h2>
+          <p class="form-hint">Clique em "Carregar para edição" num serviço abaixo ou preencha o formulário para adicionar um novo serviço demonstrativo.</p>
+
+          <div id="inst-lista-servicos" class="service-list" style="margin-bottom: var(--space-4);"></div>
+
+          <fieldset class="fieldset-edicao-institucional">
+            <form id="form-salvar-servico" class="filter-fieldset" style="padding: var(--space-4);">
+              <h3>Adicionar ou Atualizar Serviço da Unidade</h3>
+              <input type="hidden" id="form-srv-id-edicao" value="" />
+
+              <div class="two-col-grid" style="margin-top: var(--space-2);">
+                <div class="form-group">
+                  <label for="form-srv-especialidade" class="form-label">Especialidade:</label>
+                  <select id="form-srv-especialidade" class="form-select" required></select>
+                </div>
+                <div class="form-group">
+                  <label for="form-srv-nome" class="form-label">Nome do Serviço / Procedimento:</label>
+                  <input type="text" id="form-srv-nome" class="form-input" placeholder="Ex.: Consulta Cardiológica..." required maxlength="100" />
+                </div>
+                <div class="form-group">
+                  <label for="form-srv-horarios" class="form-label">Dias e Horários específicos:</label>
+                  <input type="text" id="form-srv-horarios" class="form-input" placeholder="Ex.: Seg e Qua, 08h às 12h" required maxlength="80" />
+                </div>
+                <div class="form-group">
+                  <span class="form-label">Modalidades atendidas neste serviço:</span>
+                  <div style="display: flex; gap: var(--space-3); margin-top: 6px;">
+                    <label class="filter-check-label"><input type="checkbox" name="srv-mod" value="SUS" checked /> SUS</label>
+                    <label class="filter-check-label"><input type="checkbox" name="srv-mod" value="Convênio" /> Convênio</label>
+                    <label class="filter-check-label"><input type="checkbox" name="srv-mod" value="Particular" /> Particular</label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group" style="margin-top: var(--space-2);">
+                <label for="form-srv-requisitos" class="form-label">Documentos exigidos, preparo e requisitos (Aciona alerta se alterado):</label>
+                <input type="text" id="form-srv-requisitos" class="form-input" placeholder="Ex.: Cartão SUS, RG e guia de encaminhamento..." required maxlength="220" />
+              </div>
+
+              <div style="margin-top: var(--space-3);">
+                <button type="submit" class="btn btn--primary">Guardar Serviço e Requisitos</button>
+              </div>
+            </form>
+          </fieldset>
+        </section>
+
+        <!-- Seção 5: Solicitação de Verificação e Cadastro Institucional (RF-031 / Cap. 8.10 / Cap. 8.12 / CA-803 / T-17) -->
+        <section id="sec-verificacao-cadastro" class="card" aria-labelledby="titulo-verif-inst">
+          <h2 id="titulo-verif-inst">5. Solicitação de Verificação e Vínculo Institucional (RF-031 / CA-803)</h2>
+          <p class="form-hint">
+            O selo <strong>Verificado</strong> nunca é atribuído livremente pela própria instituição (CA-803). Envie uma solicitação abaixo para análise no Painel Administrativo.
+          </p>
+
+          <fieldset class="fieldset-edicao-institucional">
+            <div class="two-col-grid" style="margin-top: var(--space-3);">
+              <form id="form-solicitar-verificacao" class="filter-fieldset" style="padding: var(--space-4);">
+                <h3>Solicitar Selo de Verificação (T-17)</h3>
+                <div class="form-group" style="margin-top: var(--space-2);">
+                  <label for="verif-doc-meta" class="form-label">Metadado de documento comprobatório (Simulado):</label>
+                  <input type="text" id="verif-doc-meta" class="form-input" value="comprovante_cnes_alvara_demo.pdf" required maxlength="80" />
+                </div>
+                <div class="form-group" style="margin-top: var(--space-2);">
+                  <label for="verif-justificativa" class="form-label">Resumo das informações revisadas:</label>
+                  <input type="text" id="verif-justificativa" class="form-input" placeholder="Ex.: Quadro de horários e especialidades conferido..." required maxlength="160" />
+                </div>
+                <button type="submit" class="btn btn--primary" style="margin-top: var(--space-3);">Enviar Pedido de Verificação</button>
+              </form>
+
+              <form id="form-solicitar-vinculo" class="filter-fieldset" style="padding: var(--space-4);">
+                <h3>Fluxo de Cadastro / Representante (Cap. 8.12)</h3>
+                <div class="form-group" style="margin-top: var(--space-2);">
+                  <label for="vinc-tipo-pedido" class="form-label">Tipo de solicitação administrativa:</label>
+                  <select id="vinc-tipo-pedido" class="form-select">
+                    <option value="CADASTRO_UNIDADE">Solicitação de Cadastro Institucional</option>
+                    <option value="VINCULO_REPRESENTANTE">Comprovação de Vínculo de Representante</option>
+                    <option value="DOCUMENTACAO_ADICIONAL">Envio de Documentação Adicional</option>
+                  </select>
+                </div>
+                <div class="form-group" style="margin-top: var(--space-2);">
+                  <label for="vinc-cnes-demo" class="form-label">CNPJ / CNES Demonstrativo (Fictício):</label>
+                  <input type="text" id="vinc-cnes-demo" class="form-input" value="CNES-FICTICIO-99001" required maxlength="40" />
+                </div>
+                <div class="form-group" style="margin-top: var(--space-2);">
+                  <label for="vinc-observacao" class="form-label">Observação para o Administrador:</label>
+                  <input type="text" id="vinc-observacao" class="form-input" placeholder="Ex.: Solicito aprovação de representante..." required maxlength="160" />
+                </div>
+                <button type="submit" class="btn btn--secondary" style="margin-top: var(--space-3);">Registar Solicitação</button>
+              </form>
+            </div>
+          </fieldset>
+
+          <h3 style="margin-top: var(--space-4); font-size: var(--fs-base);">Solicitações Registadas para esta Unidade:</h3>
+          <div id="inst-lista-verificacoes" class="service-list" style="margin-top: var(--space-2);"></div>
+        </section>
+
+        <!-- Seção 6: Histórico de Alterações da Unidade (RF-030 / CA-802) -->
+        <section id="sec-historico-auditoria" class="card" aria-labelledby="titulo-hist-inst">
+          <h2 id="titulo-hist-inst">6. Histórico e Trilha de Auditoria da Unidade (RF-030 / CA-802)</h2>
+          <p class="form-hint">Regista identificador, unidade, campo, valor anterior/novo, data/hora e ator demonstrativo.</p>
+          <div id="inst-lista-historico" class="service-list" style="margin-top: var(--space-3);"></div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <div id="app-footer"></div>
+  <script type="module" src="/js/app.js"></script>
+</body>
+</html>

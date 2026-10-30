@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Buscar Unidades e Mapa (Demo) — Bússola Saudável</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Nunito+Sans:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/tokens.css" />
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/componentes.css" />
+  <link rel="stylesheet" href="/css/responsivo.css" />
+</head>
+<body data-page="busca">
+  <div id="app-header"></div>
+
+  <main id="conteudo-principal" class="container" tabindex="-1">
+    <div id="aviso-armazenamento" class="orientation-banner" role="status" hidden></div>
+
+    <!-- Bloco de Pesquisa e 10 Filtros Combinados (RF-001 a RF-007) -->
+    <section class="card" aria-labelledby="titulo-pagina-busca">
+      <span class="demo-badge">UNIDADES FICTÍCIAS — DEMONSTRAÇÃO</span>
+      <h1 id="titulo-pagina-busca" style="margin-top: var(--space-2);">Pesquisa, Filtros Cumulativos e Mapa</h1>
+      <p class="form-hint">
+        <strong>Regra transparente de filtragem (RF-007):</strong> dentro de um mesmo grupo vale a regra <strong>OU</strong> (qualquer opção marcada); entre grupos diferentes vale a regra <strong>E</strong> (cumulativa).
+      </p>
+
+      <form id="form-pagina-busca" class="search-form" role="search" style="grid-template-columns: 2fr 1.2fr auto;">
+        <div class="form-group">
+          <label for="busca-termo" class="form-label">Termo pesquisado</label>
+          <input type="search" id="busca-termo" name="q" class="form-input" placeholder="Ex.: cardiologia, pressão alta, pediatria, Marco, UPA..." />
+        </div>
+
+        <div class="form-group">
+          <label for="busca-modo" class="form-label">Modo de pesquisa (RF-001 a 005)</label>
+          <select id="busca-modo" name="modo" class="form-select">
+            <option value="todos">Todos os campos</option>
+            <option value="especialidade">Especialidade médica (RF-001)</option>
+            <option value="condicao">Condição de saúde — Orientativo (RF-002)</option>
+            <option value="servico">Serviço ou procedimento (RF-003)</option>
+            <option value="nome">Nome ou tipo da unidade (RF-004)</option>
+            <option value="bairro">Bairro ou região (RF-005)</option>
+          </select>
+        </div>
+
+        <div style="display: flex; gap: var(--space-2);">
+          <button type="submit" class="btn btn--primary">Pesquisar</button>
+          <button type="button" id="btn-limpar-busca" class="btn btn--secondary">Limpar tudo</button>
+        </div>
+      </form>
+
+      <!-- Painel Expansível com os 10 Grupos de Filtros (RF-007) -->
+      <details class="filters-panel" open>
+        <summary style="cursor: pointer; font-weight: 700;">
+          ⚙ Filtros Avançados Cumulativos (10 critérios — RF-007)
+        </summary>
+
+        <div class="filters-grid">
+          <!-- (1) Rede -->
+          <fieldset class="filter-fieldset">
+            <legend>1. Rede de Atendimento (OU)</legend>
+            <div id="filtro-redes" class="filter-options-scroll"></div>
+          </fieldset>
+
+          <!-- (2) Bairro/Região -->
+          <fieldset class="filter-fieldset">
+            <legend>2. Bairro de Belém (OU)</legend>
+            <div id="filtro-bairros" class="filter-options-scroll"></div>
+          </fieldset>
+
+          <!-- (3) Distância (Exige coordenada de referência consentida) -->
+          <fieldset class="filter-fieldset">
+            <legend>3. Distância de Referência</legend>
+            <div class="form-group">
+              <label for="select-ponto-referencia" class="form-hint">Ponto de referência em Belém:</label>
+              <select id="select-ponto-referencia" class="form-select" style="min-height: 36px; font-size: var(--fs-xs);">
+                <option value="">Sem referência (Filtro desativado)</option>
+                <option value="MARCO_PRAÇA">Bairro Marco (Ilustrativo)</option>
+                <option value="NAZARE_CENTRO">Bairro Nazaré (Ilustrativo)</option>
+                <option value="ICOARACI_DISTRITO">Distrito Icoaraci (Ilustrativo)</option>
+              </select>
+              <button type="button" id="btn-usar-geolocalizacao" class="btn-a11y" style="margin-top: 4px;">
+                📍 Usar minha localização (Opcional)
+              </button>
+              <label for="select-distancia-max" class="form-hint" style="margin-top: 4px;">Raio máximo:</label>
+              <select id="select-distancia-max" class="form-select" style="min-height: 36px; font-size: var(--fs-xs);" disabled>
+                <option value="">Qualquer distância</option>
+                <option value="3">Até 3 km</option>
+                <option value="6">Até 6 km</option>
+                <option value="12">Até 12 km</option>
+                <option value="25">Até 25 km</option>
+              </select>
+              <small id="status-referencia-distancia" class="form-hint"></small>
+            </div>
+          </fieldset>
+
+          <!-- (4) Especialidade / Serviço -->
+          <fieldset class="filter-fieldset">
+            <legend>4. Especialidade / Serviço (OU)</legend>
+            <div id="filtro-especialidades" class="filter-options-scroll"></div>
+          </fieldset>
+
+          <!-- (5) Disponibilidade -->
+          <fieldset class="filter-fieldset">
+            <legend>5. Disponibilidade Informada (OU)</legend>
+            <div id="filtro-disponibilidades" class="filter-options-scroll"></div>
+          </fieldset>
+
+          <!-- (6) Tipo de Unidade -->
+          <fieldset class="filter-fieldset">
+            <legend>6. Tipo de Unidade (OU)</legend>
+            <div id="filtro-tipos" class="filter-options-scroll"></div>
+          </fieldset>
+
+          <!-- (7) Dias / Horários -->
+          <fieldset class="filter-fieldset">
+            <legend>7. Dias e Turnos (OU)</legend>
+            <div id="filtro-turnos" class="filter-options-scroll"></div>
+          </fieldset>
+
+          <!-- (8) Convênio Específico -->
+          <fieldset class="filter-fieldset">
+            <legend>8. Convênio Demonstrativo (OU)</legend>
+            <div id="filtro-convenios" class="filter-options-scroll"></div>
+          </fieldset>
+
+          <!-- (9) Acessibilidade -->
+          <fieldset class="filter-fieldset">
+            <legend>9. Acessibilidade (OU)</legend>
+            <div id="filtro-acessibilidades" class="filter-options-scroll"></div>
+          </fieldset>
+
+          <!-- (10) Confiabilidade -->
+          <fieldset class="filter-fieldset">
+            <legend>10. Confiabilidade da Fonte (OU)</legend>
+            <div id="filtro-confiabilidades" class="filter-options-scroll"></div>
+          </fieldset>
+        </div>
+      </details>
+
+      <!-- Chips de Filtros Ativos e Remoção Individual -->
+      <div class="active-filters-bar" aria-label="Filtros ativos aplicados">
+        <strong>Filtros ativos:</strong>
+        <div id="barra-filtros-ativos" style="display: flex; flex-wrap: wrap; gap: var(--space-2); flex: 1;"></div>
+        <button type="button" id="btn-limpar-tudo" class="btn-a11y">Limpar todos os filtros</button>
+      </div>
+    </section>
+
+    <!-- Barra de Ordenação (RF-008) e Alternância Mobile Lista | Mapa (Cap. 4.1) -->
+    <section class="card" style="padding: var(--space-4);" aria-label="Controles de ordenação e visualização">
+      <div class="results-toolbar">
+        <div>
+          <span id="contador-resultados" role="status" aria-live="polite" style="font-weight: 700;"></span>
+          <span class="form-hint" style="display: block;">A ordenação nunca classifica qualidade clínica nem garante vagas (RF-008).</span>
+        </div>
+
+        <div style="display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3);">
+          <div style="display: flex; align-items: center; gap: var(--space-2);">
+            <label for="select-ordenacao" class="form-label">Ordenar por:</label>
+            <select id="select-ordenacao" class="form-select" style="min-height: 38px;">
+              <option value="relevancia">Relevância da consulta (Padrão)</option>
+              <option value="disponibilidade">Disponibilidade informada (DISP-01/02 primeiro)</option>
+              <option value="verificacao">Verificação mais recente</option>
+              <option value="distancia">Menor distância (requer referência)</option>
+              <option value="alfabetica">Ordem alfabética (A–Z)</option>
+            </select>
+          </div>
+
+          <!-- Alternância Mobile: Lista | Mapa (CA-404 / T-07) -->
+          <div class="mobile-view-toggle" role="group" aria-label="Alternar visão entre Lista e Mapa no celular">
+            <button type="button" id="btn-view-lista" class="btn-a11y" aria-pressed="true">📋 Lista</button>
+            <button type="button" id="btn-view-mapa" class="btn-a11y" aria-pressed="false">🗺 Mapa</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="aviso-orientacao-condicao" class="orientation-banner" role="status" aria-live="polite" hidden></div>
+
+      <!-- Layout Lado a Lado: Lista (Esquerda) e Mapa (Direita) -->
+      <div id="layout-resultados-mapa" class="search-split-layout" data-mobile-view="lista">
+        <!-- Coluna da Lista e Paginação -->
+        <div class="list-column">
+          <div id="contentor-resultados-busca"></div>
+
+          <div id="box-paginacao" class="pagination-box" hidden>
+            <span id="status-paginacao" class="form-hint" role="status" aria-live="polite"></span>
+            <button type="button" id="btn-carregar-mais" class="btn btn--secondary">
+              Carregar mais unidades
+            </button>
+          </div>
+        </div>
+
+        <!-- Coluna do Mapa e Sincronização (RF-012 a RF-015) -->
+        <aside class="map-column" aria-label="Mapa demonstrativo de unidades">
+          <div class="map-sticky-panel">
+            <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--space-2); margin-bottom: var(--space-2);">
+              <h2 style="font-size: var(--fs-lg); margin-bottom: 0;">Mapa e Área de Busca</h2>
+              <!-- RF-015 / CA-402: Botão exibido após deslocar ou alterar área do mapa -->
+              <button type="button" id="btn-pesquisar-nesta-area" class="btn btn--primary" style="min-height: 36px; padding: 4px 12px; font-size: var(--fs-xs);" hidden>
+                🔍 Pesquisar nesta área
+              </button>
+            </div>
+            <p id="mapa-status-bar" class="form-hint" role="status" aria-live="polite"></p>
+            <div id="mapa-container"></div>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <div id="app-footer"></div>
+  <script type="module" src="/js/app.js"></script>
+</body>
+</html>
